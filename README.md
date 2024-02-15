@@ -41,7 +41,7 @@ Async Storage: https://react-native-async-storage.github.io/async-storage/docs/i
 
 🤝 Want to Contribute?
 
-We welcome your pull requests!
+I welcome your pull requests!
 
 🙏 Thanks
 
