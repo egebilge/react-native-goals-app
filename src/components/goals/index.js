@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import { FlatList, View } from "react-native";
 import { useGoalsStore } from "../../store/useGoalsStore";
-import { styles } from "../goals/styles";
+import { styles } from "./styles";
+import { GoalItem } from "./goal-item";
 
 const Goals = () => {
   const { goals, removeGoal } = useGoalsStore();
@@ -12,14 +13,10 @@ const Goals = () => {
         data={goals}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item, index }) => (
-          <TouchableOpacity
-            style={styles.item}
-            onPress={() => removeGoal(index)}
-          >
-            <Text style={styles.text}>{item}</Text>
-          </TouchableOpacity>
+          <GoalItem item={item} index={index} onRemoveGoal={removeGoal} />
         )}
         contentContainerStyle={styles.listContent}
+        alwaysBounceVertical={false}
       />
     </View>
   );

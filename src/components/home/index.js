@@ -1,34 +1,53 @@
-import React from "react";
-import { Text, View, TextInput, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import React, { useCallback } from "react";
+import {
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { useGoalsStore } from "../../store/useGoalsStore";
-import { styles } from "../home/styles";
+import { styles } from "./styles";
 
 const Home = () => {
   const navigation = useNavigation();
   const { goal, setGoal, addGoal } = useGoalsStore();
 
-  const handleAddGoal = () => {
+  const handleAddGoal = useCallback(() => {
     addGoal();
     navigation.navigate("Goals");
-  };
+  }, [addGoal, navigation]);
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        placeholder="Enter your goal..."
-        placeholderTextColor={"lightblue"}
-        style={styles.input}
-        value={goal}
-        onChangeText={setGoal}
-        autoComplete="off"
-        autoCorrect={false}
-        importantForAutofill="no"
-      />
-      <TouchableOpacity style={styles.button} onPress={handleAddGoal}>
-        <Text style={styles.text}>Add Goal</Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <Image
+          source={require("../../../assets/images/goal.png")}
+          style={styles.image}
+          accessibilityLabel="Goal"
+        />
+        <TextInput
+          placeholder="Enter your goal..."
+          placeholderTextColor={"#311C87"}
+          style={styles.input}
+          value={goal}
+          onChangeText={setGoal}
+          autoComplete="off"
+          autoCorrect={false}
+          importantForAutofill="no"
+        />
+        <TouchableOpacity style={styles.button} onPress={handleAddGoal}>
+          <Text style={styles.text}>Add Goal</Text>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 

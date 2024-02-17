@@ -23,15 +23,14 @@ const useGoalsStore = create((set) => ({
       );
       return { goals: newGoals };
     }),
-  loadGoals: async () => {
-    try {
-      const value = await AsyncStorage.getItem(StorageTypes.GOALS);
-      if (value !== null) {
-        set({ goals: JSON.parse(value) });
-      }
-    } catch (e) {
-      console.error(e);
-    }
+  loadGoals: () => {
+    AsyncStorage.getItem(StorageTypes.GOALS)
+      .then((value) => {
+        if (value !== null) {
+          set({ goals: JSON.parse(value) });
+        }
+      })
+      .catch(console.error);
   },
 }));
 
